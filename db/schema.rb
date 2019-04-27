@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_04_26_184405) do
+ActiveRecord::Schema.define(version: 2019_04_27_201018) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -27,7 +27,7 @@ ActiveRecord::Schema.define(version: 2019_04_26_184405) do
   create_table "credit_cards", force: :cascade do |t|
     t.decimal "credit_limit", precision: 6, scale: 2
     t.decimal "apr", precision: 4, scale: 2
-    t.integer "card_number"
+    t.bigint "card_number"
     t.integer "expiration_date"
     t.integer "cvv"
     t.decimal "balance", precision: 6, scale: 2
@@ -49,6 +49,8 @@ ActiveRecord::Schema.define(version: 2019_04_26_184405) do
     t.string "last_name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "email"
+    t.string "password_digest"
   end
 
 end

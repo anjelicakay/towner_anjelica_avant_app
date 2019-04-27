@@ -1,4 +1,5 @@
 class Api::CreditCardsController < ApplicationController
+  before_action :authenticate_user
 
   def index
     @credit_cards = CreditCard.all
@@ -6,21 +7,21 @@ class Api::CreditCardsController < ApplicationController
   end
 
   def create
-    @credit_card = CreditCard.new(
+    @credit_card = CreditCard.new( 
+                                  user_id: current_user.id,
                                   credit_limit: params[:credit_limit],
                                   apr: params[:apr],
-                                  card_number: params[:card_number],
                                   expiration_date: params[:expiration_date],
-                                  cvv: params[:cvv],
-                                  balance: params[:balance],
-                                  user_id: params[:user_id]
+                                  balance: params[:balance]
                                   )
+    @credit_card.assign_card_number
+    @credit_card.assign_cvv
 
     if @credit_card.save
       render 'show.json.jbuilder'
     else
       render json: {errors: @credit_card.errors.full_messages}, status: :unprocessable_entity
-    end   
+    end 
   end
 
   def show
@@ -50,5 +51,5 @@ class Api::CreditCardsController < ApplicationController
     credit_card.destroy
     render json: {message: "Successfully removed credit card."}
   end
-  
+
 end
