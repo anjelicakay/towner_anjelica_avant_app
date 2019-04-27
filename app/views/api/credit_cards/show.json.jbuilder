@@ -1,0 +1,1 @@
+json.partial! @credit_card, partial: "credit_card", as: :credit_card

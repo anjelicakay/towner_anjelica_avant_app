@@ -1,1 +1,1 @@
-show.json.jbuilder
+json.partial! @payment, partial: "payment", as: :payment
