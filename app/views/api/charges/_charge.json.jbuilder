@@ -1,3 +1,4 @@
+json.id charge.id
 json.date charge.date
 json.vendor charge.vendor
 json.amount charge.amount

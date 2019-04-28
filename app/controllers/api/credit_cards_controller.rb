@@ -3,6 +3,7 @@ class Api::CreditCardsController < ApplicationController
 
   def index
     @credit_cards = CreditCard.all
+    credit_card.calculate_balance
     render 'index.json.jbuilder'
   end
 
@@ -26,18 +27,19 @@ class Api::CreditCardsController < ApplicationController
 
   def show
     @credit_card = CreditCard.find(params[:id])
+    @credit_card.calculate_balance
     render 'show.json.jbuilder'
   end
 
   def update
-    @credit_card = CreditCard.find(parms[:id])
+    @credit_card = CreditCard.find(params[:id])
 
     @credit_card.credit_limit = params[:credit_limit] || @credit_card.credit_limit
     @credit_card.apr = params[:apr] || @credit_card.apr
     @credit_card.card_number = params[:card_number] || @credit_card.card_number
     @credit_card.expiration_date = params[:expiration_date] || @credit_card.expiration_date
     @credit_card.cvv = params[:cvv] || @credit_card.cvv
-    @credit_card.balance = params[:balance] || @credit_card.balance
+    @credit_card.calculate_balance
 
     if @credit_card.save
       render 'show.json.jbuilder'

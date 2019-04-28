@@ -24,15 +24,20 @@ class CreditCard < ApplicationRecord
     
   # end
 
-  # def calculate_balance
-  #   starting_balance = 1000
+  def calculate_balance
+    starting_balance = 0
 
-  #   charges.amount.each do |charge|
-  #     starting_balance -= charge.amount
-  #   end
+    charges.each do |charge|
+      if charge.amount > 0
+        starting_balance += charge.amount
+      end
+    end
 
-  #   self.balance = starting_balance
-  # end
+    # if 
+    #   starting_balance * (0.35 / 365) * 30
+
+    # self.balance = starting_balance
+  end
 
 
 

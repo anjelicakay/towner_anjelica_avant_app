@@ -1,1 +1,1 @@
-json.array! @charges, partial: "charges", as: :charges
+json.array! @charges, partial: "charge", as: :charge

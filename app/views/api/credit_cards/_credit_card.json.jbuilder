@@ -8,5 +8,5 @@ json.balance credit_card.balance
 json.user_id credit_card.user_id
 
 json.charges do
-  json.partial! credit_card.charges, partial: 'api/charges/charge', as: :charge
+  json.array! credit_card.charges, partial: 'api/charges/charge', as: :charge
 end
