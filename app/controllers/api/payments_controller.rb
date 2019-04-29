@@ -1,7 +1,8 @@
 class Api::PaymentsController < ApplicationController
+  before_action :authenticate_user
 
   def index
-    @payments = Payments.all 
+    @payments = Payment.all 
     render 'index.json.jbuilder'
   end
 
@@ -9,7 +10,8 @@ class Api::PaymentsController < ApplicationController
     @payment = Payment.new(
                             amount: params[:amount],
                             date: params[:date],
-                            credit_card_id: params[:credit_card_id]
+                            credit_card_id: params[:credit_card_id],
+                            status: "pending"
                           )
 
     if @payment.save

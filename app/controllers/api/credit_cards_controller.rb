@@ -2,8 +2,8 @@ class Api::CreditCardsController < ApplicationController
   before_action :authenticate_user
 
   def index
-    @credit_cards = CreditCard.all
-    credit_card.calculate_balance
+    @credit_cards = current_user.credit_cards
+
     render 'index.json.jbuilder'
   end
 
@@ -48,10 +48,9 @@ class Api::CreditCardsController < ApplicationController
     end   
   end
 
-    def destroy
+  def destroy
     credit_card = CreditCard.find(params[:id])
     credit_card.destroy
     render json: {message: "Successfully removed credit card."}
   end
-
 end

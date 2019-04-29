@@ -20,25 +20,41 @@ class CreditCard < ApplicationRecord
     self.cvv = new_cvv.join
   end
 
-  # def assign_expiration_date
-    
-  # end
-
-  def calculate_balance
-    starting_balance = 0
+  def total_charges
+    balance_total = 0
 
     charges.each do |charge|
       if charge.amount > 0
-        starting_balance += charge.amount
+        balance_total += charge.amount
       end
     end
-
-    # if 
-    #   starting_balance * (0.35 / 365) * 30
-
-    # self.balance = starting_balance
+    self.balance = balance_total
   end
 
+  def calculate_interest
+    d = Date.today
+    today_date = d.mday
 
+    if today_date == 30
+      interest = balance * (0.35 / 365) * 30
+      self.balance += interest
+    end
+  end
 
+  def process_payment
+    total_amount = balance
+    payments.each do |payment|
+      if payment.status == "pending"
+        total_amount -= payment.amount
+        payment.update(status: "completed")
+      end
+    end
+  end
+
+  def calculate_balance
+    total_charges
+    calculate_interest
+    process_payment
+    save
+  end
 end

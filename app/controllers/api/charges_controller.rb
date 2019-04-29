@@ -1,5 +1,6 @@
 class Api::ChargesController < ApplicationController
-
+  before_action :authenticate_user
+  
   def index
     @charges = Charge.all 
     render 'index.json.jbuilder'
